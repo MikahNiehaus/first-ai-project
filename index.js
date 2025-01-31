@@ -1,16 +1,18 @@
-import OpenAI from 'openai';
-
-const openai = new OpenAI({
-    apiKey: import.meta.env.VITE_OPENAI_API_KEY
-});
-
-async function getCompletion() {
-    const response = await openai.chat.completions.create({
-        model: "gpt-4",
-        messages: [{ role: "user", content: "Hello, OpenAI!" }]
-    });
-
-    console.log(response);
-}
-
-getCompletion();
+async function askAI() {
+    try {
+      const response = await fetch("http://localhost:5000/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: "Hello, OpenAI!" }),
+      });
+  
+      const data = await response.json();
+      console.log("AI Response:", data);
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+    }
+  }
+  
+  // Run the function when the page loads
+  askAI();
+  
